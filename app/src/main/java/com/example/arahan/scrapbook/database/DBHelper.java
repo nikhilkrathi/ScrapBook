@@ -81,7 +81,7 @@ public class DBHelper extends SQLiteOpenHelper {
     }
 
     public void truncateTable(){
-        String query="TRUNCATE TABLE users_data";
+        String query="DELETE FROM users_data";
         SQLiteDatabase database=this.getWritableDatabase();
         try{
             database.execSQL(query);

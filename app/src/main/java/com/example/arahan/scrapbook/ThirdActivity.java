@@ -34,13 +34,19 @@ public class ThirdActivity extends AppCompatActivity {
 
         final ArrayList<String> values = new ArrayList<>();
         ArrayList<HashMap<String, String>> data = dbHelper.getAllUsers();
-        for (HashMap<String, String> hm: data) {
+        for (HashMap<String, String> hm : data) {
             String output = "";
+            output += "Name: ";
             output += hm.get("name") + "\n";
+            output += "Email: ";
             output += hm.get("email") + "\n";
+            output += "Hobbies: ";
             output += hm.get("hobbies") + "\n";
+            output += "Best friend: ";
             output += hm.get("best_friend") + "\n";
+            output += "Contact: ";
             output += hm.get("contact") + "\n";
+            output += "Crush: ";
             output += hm.get("crush") + "\n";
             values.add(output);
         }

@@ -1,6 +1,7 @@
 package com.example.arahan.scrapbook;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.androidquery.AQuery;
@@ -22,8 +23,8 @@ import java.util.StringTokenizer;
 public class ServerConnection {
     private AQuery aQuery;
     private Context context;
-    String send = "http://";
-    String fetch = "http://";
+    String send = "http://192.168.43.17/ScrapBook/index.php/Scrapbook/sendData";
+    String fetch = "http://192.168.43.17/ScrapBook/index.php/Scrapbook/fetchData";
 
     public ServerConnection(Context context) {
         aQuery = new AQuery(context);
@@ -35,15 +36,16 @@ public class ServerConnection {
         aQuery.ajax(send, sendParams, JSONObject.class, new AjaxCallback<JSONObject>() {
             @Override
             public void callback(String url, JSONObject object, AjaxStatus status) {
-                super.callback(url, object, status);
                 int code = 0;
                 if (object != null) {
+                    Log.d("sendData","object!=null");
                     try {
                         code = object.getInt("ResultSet");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
                 } else {
+                    Log.d("sendData","object=null");
                     Toast.makeText(context, "Failed to send data", Toast.LENGTH_SHORT).show();
                 }
 
@@ -62,13 +64,13 @@ public class ServerConnection {
         aQuery.ajax(fetch, fetchParams, JSONObject.class, new AjaxCallback<JSONObject>() {
             @Override
             public void callback(String url, JSONObject object, AjaxStatus status) {
-                super.callback(url, object, status);
                 int length = 0;
                 ArrayList<HashMap<String, String>> queryValues = new ArrayList<HashMap<String, String>>();
                 if (object != null) {
+                    Log.d("fetchData","object!=null");
                     try {
-                        String data = object.getString("Data");
-                        length = object.getInt("length");
+                        String data = object.getString("data");
+                        length = object.getInt("num");
 
                         JSONObject reader = new JSONObject(data);
 
@@ -89,6 +91,7 @@ public class ServerConnection {
                         e.printStackTrace();
                     }
                 } else {
+                    Log.d("fetchData","object=null");
                     Toast.makeText(context, "Failed to fetch data", Toast.LENGTH_SHORT).show();
                 }
                 if (status.getCode() == 200) {

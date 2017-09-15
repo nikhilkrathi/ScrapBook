@@ -44,10 +44,33 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
 
+        upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HashMap<String, Object> values =new HashMap<String, Object>();
+                values.put("name", name.getText().toString());
+                values.put("email", email.getText().toString());
+                values.put("hobbies", hobbies.getText().toString());
+                values.put("best_friend", best_friend.getText().toString());
+                values.put("contact", contact.getText().toString());
+                values.put("crush", crush.getText().toString());
+                ServerConnection serverConnection=new ServerConnection(getApplicationContext());
+                serverConnection.sendData(values);
+            }
+        });
+
+        download.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ServerConnection serverConnection=new ServerConnection(getApplicationContext());
+                serverConnection.FetchData();
+            }
+        });
+
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                HashMap<String, String> values = new HashMap();
+                HashMap<String, String> values = new HashMap<String, String>();
                 values.put("name", name.getText().toString());
                 values.put("email", email.getText().toString());
                 values.put("hobbies", hobbies.getText().toString());
